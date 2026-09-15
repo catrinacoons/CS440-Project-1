@@ -1,0 +1,2 @@
+For the solved problems q1, q2, q3, Yulisa Medrano and Catrina Coons only modified the search.py file.
+A jupyter notebook file was created called finished.ipynb with the code from search.py and the autograder.
