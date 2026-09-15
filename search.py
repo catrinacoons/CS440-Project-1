@@ -17,6 +17,8 @@ In search.py, you will implement generic search algorithms which are called by
 Pacman agents (in searchAgents.py).
 """
 
+import heapq
+
 import util
 from game import Directions
 from typing import List
@@ -134,8 +136,30 @@ def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
 def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    frontier = util.PriorityQueue()
+    visited = {}
+    start = problem.getStartState()
+    frontier.push((start, [], 0), 0)
 
+    while frontier:
+        current_state, path, cost = frontier.pop() #need cost or add in the helper?
+        if current_state in visited and visited[current_state] <= cost: #check if this is the cheapest
+            continue
+        visited[current_state] = cost #cheapest
+
+        if problem.isGoalState(current_state):
+            return path
+
+        for successor, action, stepCost in problem.getSuccessors(current_state):
+            if successor not in visited:
+                new_path = path + [action]
+                new_cost = cost + stepCost
+
+                frontier.push((successor, new_path, new_cost),new_cost)
+    return []
+
+
+    util.raiseNotDefined()
 def nullHeuristic(state, problem=None) -> float:
     """
     A heuristic function estimates the cost from the current state to the nearest
